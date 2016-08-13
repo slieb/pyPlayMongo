@@ -41,6 +41,7 @@ cursor = db.games.count()
 print "Total number of games recorded is ", cursor
 
 # set up aggregation pipeline to find top 5 teams with most wins between 2000 and 2010
+# note - underlying MongoDB may have ISODate fields, but we must use datetime from pymongo driver
 startDate = datetime(2000,8,1)
 endDate = datetime(2010,8,1)
 pipeline = [
@@ -57,8 +58,8 @@ for document in cursor:
 
 # use aggregation to determine percentage of wins based on total defensive rebounds
 pipeline = [
-    {"$unwind" : '$box'},
-    {"$group": {"_id": '$box.team.drb', "winPercentage" : {"$avg" : "$box.won"}}},
+    {"$unwind" : "$box"},
+    {"$group": {"_id": "$box.team.drb", "winPercentage" : {"$avg" : "$box.won"}}},
     {"$sort" : {"_id" : 1}}
 ]
 cursor = db.games.aggregate(pipeline)
@@ -67,7 +68,7 @@ for document in cursor:
 
 # use aggregation to determine percentage of wins based on total rebounds
 pipeline = [
-    {"$unwind" : '$box'},
+    {"$unwind" : "$box"},
     {"$group": {"_id" : "$box.team.trb", "winPercentage" : {"$avg" : "$box.won"}}},
     {"$sort" : {"_id" : 1}}
 ]
