@@ -54,3 +54,23 @@ pipeline = [
 cursor = db.games.aggregate(pipeline)
 for document in cursor:
     print document
+
+# use aggregation to determine percentage of wins based on total defensive rebounds
+pipeline = [
+    {"$unwind" : '$box'},
+    {"$group": {"_id": '$box.team.drb', "winPercentage" : {"$avg" : "$box.won"}}},
+    {"$sort" : {"_id" : 1}}
+]
+cursor = db.games.aggregate(pipeline)
+for document in cursor:
+    print document
+
+# use aggregation to determine percentage of wins based on total rebounds
+pipeline = [
+    {"$unwind" : '$box'},
+    {"$group": {"_id" : "$box.team.trb", "winPercentage" : {"$avg" : "$box.won"}}},
+    {"$sort" : {"_id" : 1}}
+]
+cursor = db.games.aggregate(pipeline)
+for document in cursor:
+    print document

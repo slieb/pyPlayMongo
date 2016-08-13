@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/pyPlayMongo.iml" filepath="$PROJECT_DIR$/.idea/pyPlayMongo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../pyPlaySpark/.idea/pyPlaySpark.iml" filepath="$PROJECT_DIR$/../pyPlaySpark/.idea/pyPlaySpark.iml" />
     </modules>
   </component>
 </project>
